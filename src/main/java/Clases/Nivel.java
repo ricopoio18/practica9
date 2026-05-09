@@ -4,7 +4,6 @@ import Interfaces.ElementoDinamico;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Nivel {
     private String nombre;
@@ -49,12 +48,9 @@ public class Nivel {
         elementosDinamicos.add(elemento);
     }
 
-    public void moverElementosDinamicos(){
-        Random rm = new Random();
-        String[] direccion = {"norte","sur","este","oeste"};
-
-        for(ElementoDinamico elemento : elementosDinamicos){
-            elemento.mover(direccion[rm.nextInt(4)], rm.nextInt(500) );
+    public void moverElementosDinamicos(String direccion, int distancia) {
+        for (ElementoDinamico e : elementosDinamicos) {
+            e.mover(direccion, distancia);
         }
     }
 

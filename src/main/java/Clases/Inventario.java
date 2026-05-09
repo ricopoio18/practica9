@@ -11,7 +11,7 @@ public class Inventario {
 
     public Inventario(int capacidadMaxima){
         this.capacidadMaxima = capacidadMaxima;
-        items = new ArrayList<Inventariable>();
+        items = new ArrayList<>();
     }
 
     public int getCapacidadMaxima() {

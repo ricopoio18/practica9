@@ -8,14 +8,12 @@ public class Personaje implements Destruible, ElementoDinamico {
     private int vida;
     private int posicionX;
     private int posicionY;
-    private boolean vivo;
 
     public Personaje(String nombre, int vida, int posicionX, int posicionY) {
         this.nombre = nombre;
         this.vida = vida;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
-        this.vivo = true;
     }
 
     public String getNombre(){
@@ -41,7 +39,7 @@ public class Personaje implements Destruible, ElementoDinamico {
 
     public void recibirDaño(int daño){
 
-        vida = Math.max(0, vida - daño);
+        vida -= daño;
         if (vida == 0) {
             destruye();
         }
@@ -69,7 +67,7 @@ public class Personaje implements Destruible, ElementoDinamico {
 
     @Override
     public void destruye(){
-        vivo = false;
+        vida = 0;
         System.out.println(nombre + " ha sido eliminado");
     }
 
