@@ -1,4 +1,4 @@
-package Clases;
+package Modelo;
 
 import Interfaces.Inventariable;
 
@@ -27,12 +27,12 @@ public class Inventario {
             System.out.println("Item nulo");
             return false;
         }
-        if(items.size() < capacidadMaxima){
-            return items.add(item);
-        } else {
-            System.out.println("Inventario lleno");
-            return false;
+        if (items.size() < capacidadMaxima) {
+            items.add(item);
+            item.registrar();
+            return true;
         }
+        return false;
     }
 
     public boolean eliminarItem(Inventariable item){

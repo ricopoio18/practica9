@@ -1,54 +1,59 @@
-package Clases;
+package Modelo;
 
+import Interfaces.Destruible;
 import Interfaces.ElementoDinamico;
 
-public class Utileria implements ElementoDinamico {
+public class Personaje implements Destruible, ElementoDinamico {
     private String nombre;
-    private String descripcion;
+    private int vida;
     private int posicionX;
     private int posicionY;
-    private boolean usada;
 
-    public Utileria(String nombre, String descripcion, int posicionX, int posicionY){
+    public Personaje(String nombre, int vida, int posicionX, int posicionY) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.vida = vida;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
-        usada = false;
     }
 
     public String getNombre(){
         return nombre;
     }
 
-    public String getDescripcion(){
-        return descripcion;
+    public int getVida(){
+        return vida;
     }
 
     public int getPosicionX(){
         return posicionX;
     }
 
+    public void setPosicionX(double posicionX){
+
+    }
+
     public int getPosicionY(){
         return posicionY;
     }
 
-    public boolean isUsada(){
-        return usada;
+
+    public void setPosicion(int x, int y){
+        posicionX = x;
+        posicionY = y;
     }
 
-    public void usar(){
-        if (!usada) {
-            usada = true;
-            System.out.println(nombre + " ha sido usado");
-        } else {
-            System.out.println(nombre + " ya fue usado");
+    public void recibirDaño(int daño){
+
+        vida -= daño;
+        if (vida == 0) {
+            destruye();
         }
     }
 
     @Override
     public void mover(String direccion, int distancia){
-        switch(direccion.toLowerCase()){
+        String cadena = direccion.toLowerCase();
+        switch(cadena){
             case "norte":
                 posicionY -= distancia;
                 break;
@@ -64,4 +69,11 @@ public class Utileria implements ElementoDinamico {
 
         }
     }
+
+    @Override
+    public void destruye(){
+        vida = 0;
+        System.out.println(nombre + " ha sido eliminado");
+    }
+
 }

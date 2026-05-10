@@ -1,4 +1,4 @@
-package Clases;
+package Modelo;
 
 import Interfaces.Destruible;
 

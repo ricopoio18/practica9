@@ -1,20 +1,23 @@
-package Clases;
+package Modelo;
 
 public class CheckPoint {
-    private String nombre;
+    //LIGERO CAMBIO QUE NO AFECTA A LA IMPLEMENTACIÓN DEL PROGRAMA BASE DADO, DE DAR NOMBRE A LOS NIVELES SOLO
+    //SERÁ EL NÚMERO DEL NIVEL POR CUESTIONES CREATIVAS.
+    private int nivel;
     private int posicionX;
     private int posicionY;
     private boolean activado;
 
-    public CheckPoint(String nombre, int posicionX, int posicionY) {
-        this.nombre = nombre;
+
+    public CheckPoint(int nivel, int posicionX, int posicionY) {
+        this.nivel = nivel;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.activado = false;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getNivel() {
+        return nivel;
     }
 
     public int getPosicionX() {

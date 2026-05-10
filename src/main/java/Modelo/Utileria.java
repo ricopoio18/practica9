@@ -1,27 +1,28 @@
-package Clases;
+package Modelo;
 
-import Interfaces.Destruible;
 import Interfaces.ElementoDinamico;
 
-public class Personaje implements Destruible, ElementoDinamico {
+public class Utileria implements ElementoDinamico {
     private String nombre;
-    private int vida;
+    private String descripcion;
     private int posicionX;
     private int posicionY;
+    private boolean usada;
 
-    public Personaje(String nombre, int vida, int posicionX, int posicionY) {
+    public Utileria(String nombre, String descripcion, int posicionX, int posicionY){
         this.nombre = nombre;
-        this.vida = vida;
+        this.descripcion = descripcion;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
+        usada = false;
     }
 
     public String getNombre(){
         return nombre;
     }
 
-    public int getVida(){
-        return vida;
+    public String getDescripcion(){
+        return descripcion;
     }
 
     public int getPosicionX(){
@@ -32,23 +33,22 @@ public class Personaje implements Destruible, ElementoDinamico {
         return posicionY;
     }
 
-    public void setPosicion(int x, int y){
-        posicionX = x;
-        posicionY = y;
+    public boolean isUsada(){
+        return usada;
     }
 
-    public void recibirDaño(int daño){
-
-        vida -= daño;
-        if (vida == 0) {
-            destruye();
+    public void usar(){
+        if (!usada) {
+            usada = true;
+            System.out.println(nombre + " ha sido usado");
+        } else {
+            System.out.println(nombre + " ya fue usado");
         }
     }
 
     @Override
     public void mover(String direccion, int distancia){
-        String cadena = direccion.toLowerCase();
-        switch(cadena){
+        switch(direccion.toLowerCase()){
             case "norte":
                 posicionY -= distancia;
                 break;
@@ -64,11 +64,4 @@ public class Personaje implements Destruible, ElementoDinamico {
 
         }
     }
-
-    @Override
-    public void destruye(){
-        vida = 0;
-        System.out.println(nombre + " ha sido eliminado");
-    }
-
 }

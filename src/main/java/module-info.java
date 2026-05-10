@@ -13,4 +13,5 @@ module com.example.practica9 {
 
     opens com.example.practica9 to javafx.fxml;
     exports com.example.practica9;
+    exports GUI;
 }
