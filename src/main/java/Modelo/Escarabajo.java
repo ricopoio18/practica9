@@ -5,10 +5,17 @@ public class Escarabajo extends Personaje {
     private Arma arma;
     private long ultimoAtaque;
     private long tiempoEspera;
+    private double fuerzaMultiplicador = 1.0;
 
     public Escarabajo(String nombre, int vida, int x, int y, long tiempoEspera) {
         super(nombre, vida, x, y);
         this.tiempoEspera = tiempoEspera;
+    }
+    public void setFuerzaMultiplicador(double factor) {
+        this.fuerzaMultiplicador = factor;
+    }
+    public double getFuerzaMultiplicador() {
+        return fuerzaMultiplicador;
     }
 
     public void setArma(Arma arma) {

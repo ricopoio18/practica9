@@ -53,6 +53,9 @@ public class Nivel {
             e.mover(direccion, distancia);
         }
     }
+    public Inventario getInventario() {
+        return this.inventario;
+    }
 
     public void mostrarEstado(){
         System.out.println("Nombre: "+ nombre + "\nNúmero: " + numero + "\nDificultad: " + dificultad +

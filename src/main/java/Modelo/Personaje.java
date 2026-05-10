@@ -29,7 +29,7 @@ public class Personaje implements Destruible, ElementoDinamico {
     }
 
     public void setPosicionX(double posicionX){
-
+        this.posicionX = (int) posicionX;
     }
 
     public int getPosicionY(){

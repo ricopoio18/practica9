@@ -1,4 +1,5 @@
 package GestorJuego;
+import Interfaces.Inventariable;
 import Modelo.*;
 
 public class GestorJuego {
@@ -6,6 +7,7 @@ public class GestorJuego {
     private NivelCombate nivelActual;
     private int numeroNivel = 1;
     private boolean juegoTerminado = false;
+    private Inventario inventarioJugador = new Inventario(10);
 
     private CheckPoint checkPointActual = null;
 
@@ -15,11 +17,17 @@ public class GestorJuego {
 
     public void cargarNivel(int numero) {
         this.numeroNivel = numero;
-        this.nivelActual = new NivelCombate("Nivel " + numero, numero, "Normal", new Inventario(10));
 
+        if (numero == 1 && inventarioJugador.buscarPorNombre("Fruta Poder") == null) {
+            inventarioJugador.agregarItem(new FrutaPoder("Fruta Poder", 200, "Poder", 2.0));
+        }
+
+        this.nivelActual = new NivelCombate("Nivel " + numero, numero, "Normal", inventarioJugador);
         System.out.println("Cargando nivel " + numero);
     }
-
+    public Inventario getInventarioJugador() {
+        return inventarioJugador;
+    }
     public NivelCombate getNivelActual() {
         return nivelActual;
     }
@@ -64,8 +72,19 @@ public class GestorJuego {
     }
 
     public void jugadorGana(Personaje jugador, boolean guardar) {
-        if (guardar) {
-            guardarPartida(jugador);
+        if (guardar) guardarPartida(jugador);
+
+        // Si está en nivel 1 y va a pasar a nivel 2, consumir fruta
+        if (numeroNivel == 1) {
+            for (Inventariable item : inventarioJugador.getItems()) {
+                if (item instanceof FrutaPoder fruta && !fruta.isConsumida()) {
+                    fruta.consumir();
+                    if (jugador instanceof Escarabajo esc) {
+                        esc.setFuerzaMultiplicador(fruta.getMultiplicadorFuerza());
+                    }
+                    break;
+                }
+            }
         }
 
         if (numeroNivel < 2) {

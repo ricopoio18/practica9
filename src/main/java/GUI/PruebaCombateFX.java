@@ -1,5 +1,6 @@
 package GUI;
 
+import Interfaces.Inventariable;
 import Modelo.*;
 import GestorJuego.*;
 import MotorCombate.*;
@@ -22,6 +23,8 @@ public class PruebaCombateFX extends Application {
     private GestorJuego gestor;
     private boolean esperandoDecision;
     private boolean juegoPausado = false;
+    private boolean moverIzquierda = false;
+    private boolean moverDerecha = false;
 
     // VARIABLE RENOMBRADA: Ahora es más claro qué hace
     private boolean teclaCombate = false;
@@ -36,6 +39,7 @@ public class PruebaCombateFX extends Application {
 
         jugador.setArma(new Arma("Empuje", 10, 60));
         enemigo.setArma(new Arma("Empuje", 5, 60));
+
 
         // Imágenes
         Image fondoImg = new Image(getClass().getResource("/img/fondo.jpg").toExternalForm());
@@ -82,18 +86,32 @@ public class PruebaCombateFX extends Application {
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case UP:
-                    teclaCombate = true; // Derecha para pelear
+                    teclaCombate = true;
+                    break;
+                case A:
+                    moverIzquierda = true;
+                    break;
+                case D:
+                    moverDerecha = true;
                     break;
                 case SPACE:
-                    togglePausa(btnPausa); // Espacio para pausar
+                    togglePausa(btnPausa);
                     break;
             }
-            e.consume(); // Evita que JavaFX use el Espacio para activar botones
+            e.consume();
         });
 
         scene.setOnKeyReleased(e -> {
-            if (e.getCode() == javafx.scene.input.KeyCode.UP) { // Comparación directa
-                teclaCombate = false;
+            switch (e.getCode()) {
+                case UP:
+                    teclaCombate = false;
+                    break;
+                case A:
+                    moverIzquierda = false;
+                    break;
+                case D:
+                    moverDerecha = false;
+                    break;
             }
         });
 
@@ -111,6 +129,12 @@ public class PruebaCombateFX extends Application {
 
         root.getChildren().addAll(lblNivel, panelGuardar, panelVictoria);
 
+        Label frutaLabel = new Label();
+        frutaLabel.setLayoutX(10);
+        frutaLabel.setLayoutY(80);
+        frutaLabel.setStyle("-fx-text-fill: red; -fx-font-size: 30px; -fx-font-weight: bold;");
+        root.getChildren().add(frutaLabel);
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -122,10 +146,39 @@ public class PruebaCombateFX extends Application {
                     return;
                 }
 
+                int velocidad = 3; // ajusta a gusto
+
+                if (!motor.isJuegoActivo()) {
+                    // si el juego está “terminando” no muevas
+                } else {
+                    if (moverIzquierda && !moverDerecha) {
+                        jugador.mover("oeste", velocidad);
+                    } else if (moverDerecha && !moverIzquierda) {
+                        jugador.mover("este", velocidad);
+                    }
+                }
                 // USANDO LA NUEVA VARIABLE
                 motor.actualizar(teclaCombate);
 
+
                 lblNivel.setText("NIVEL: " + gestor.getNumeroNivel());
+
+                FrutaPoder frutaPoder = null;
+                for (Inventariable item : gestor.getInventarioJugador().getItems()) {
+                    if (item instanceof FrutaPoder) {
+                        frutaPoder = (FrutaPoder) item;
+                        break;
+                    }
+                }
+                if (frutaPoder != null) {
+                    if (frutaPoder.isConsumida()) {
+                        frutaLabel.setText("¡Fruta Poder consumida! Fuerza x" + frutaPoder.getMultiplicadorFuerza());
+                    } else {
+                        frutaLabel.setText("Fruta Poder lista: Fuerza x" + frutaPoder.getMultiplicadorFuerza());
+                    }
+                } else {
+                    frutaLabel.setText("");
+                }
 
                 jugadorView.setX(jugador.getPosicionX());
                 jugadorView.setY(jugador.getPosicionY());
