@@ -81,3 +81,9 @@ HAY ALGUNOS CAMBIOS POR CUESTIONES CREATIVAS.
 1. El jugador solo se mueve al este o al oeste por el mismo hecho de que esta en un tronco.
 2. No hay obstáculos porque se trata de una pelea tipo zumo donde el perdedor sale del límite.
 3. Los checkpoints estan en forma de pregunta para el usuario por si quiere guardar la partida cuando gana un nivel.
+
+(ACTUALIZACIÓN PARA LA PRÁCTICA 10).
+Se creó la clase ArchivoPersistencia que contiene los métodos para guardar y cargar un archivo de texto.
+El archivo contiene el nivel del juego, la posición en x y la lista de los objetos del inventario.
+Para poder guardar un punto de la partida en el archivo se debe presionar la tecla "G".
+Para cargar partida en el último punto guardado en el archivo se presiona "C".
