@@ -130,6 +130,15 @@ public class PruebaCombateFX extends Application {
                 case SPACE:
                     togglePausa(btnPausa);
                     break;
+                    // nuevas teclas para presionar, G es para guardar en el archivo y C para cargar el archivo
+                case G:
+                    Persistencia.ArchivoPersistencia.guardarPartida("partida.txt", gestor, jugador);
+                    break;
+
+                case C:
+                    Persistencia.ArchivoPersistencia.cargarPartida("partida.txt", gestor, jugador);
+                    motor = new MotorCombate(jugador, enemigo, gestor.getNivelActual());
+                    break;
             }
             e.consume();
         });
